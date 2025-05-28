@@ -13,14 +13,20 @@ public class Quiz : MonoBehaviour
     [SerializeField] Sprite defaultAnswerSprite;
     [SerializeField] Sprite correctAnswerSprite;
 
+    Timer timer;
+
     void Start()
     {
+        timer = GetComponent<Timer>();
+
         StartQuestion();
     }
 
     void StartQuestion()
     {
         GetNextQuestion();
+
+        timer.StartTimer();
     }
 
     void GetNextQuestion()

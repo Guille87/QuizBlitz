@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 99260908}
   - component: {fileID: 99260907}
   - component: {fileID: 99260911}
+  - component: {fileID: 99260912}
   m_Layer: 5
   m_Name: Question Canvas
   m_TagString: Untagged
@@ -596,6 +597,21 @@ MonoBehaviour:
   - {fileID: 1767859032}
   defaultAnswerSprite: {fileID: 21300000, guid: c925587e68f88634e9e875948f366c5b, type: 3}
   correctAnswerSprite: {fileID: 21300000, guid: c68210bb0b53cf84298661df5e144f71, type: 3}
+--- !u!114 &99260912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99260906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de895e6e31d7c244ad5e375a9a28777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answerTime: 10
+  reviewTime: 5
+  timerImage: {fileID: 922273896}
 --- !u!1 &104814352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1559,7 +1575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1343865941
 MonoBehaviour:
   m_ObjectHideFlags: 0
