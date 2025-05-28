@@ -7,11 +7,34 @@ public class Timer : MonoBehaviour
     [SerializeField] float reviewTime;
     [SerializeField] Image timerImage;
 
+    [SerializeField] Sprite defaultTimerSprite;
+    [SerializeField] Sprite reviewTimerSprite;
+
     float timeLeft;
     float totalTime;
 
+    public enum TimerState
+    {
+        NotStarted,
+        Answering,
+        Reviewing,
+        ReviewEnded
+    }
+
+    TimerState timerState;
+    public TimerState State => timerState;
+
+    void Awake()
+    {
+        timerState = TimerState.NotStarted;
+    }
+
     public void StartTimer()
     {
+        timerState = TimerState.Answering;
+
+        timerImage.sprite = defaultTimerSprite;
+
         ResetTimer(answerTime);
     }
 
@@ -19,6 +42,7 @@ public class Timer : MonoBehaviour
     {
         UpdateTimer();
         UpdateTimerImage();
+        UpdateState();
     }
 
     void ResetTimer(float time)
@@ -26,6 +50,11 @@ public class Timer : MonoBehaviour
         timeLeft = time;
         totalTime = time;
         timerImage.fillAmount = 1f;
+    }
+
+    public void CancelTimer()
+    {
+        timeLeft = 0;
     }
 
     void UpdateTimer()
@@ -45,5 +74,24 @@ public class Timer : MonoBehaviour
         float fillAmount = timeLeft / totalTime;
 
         timerImage.fillAmount = fillAmount;
+    }
+
+    void UpdateState()
+    {
+        if (timeLeft == 0)
+        {
+            if (timerState == TimerState.Answering)
+            {
+                timerState = TimerState.Reviewing;
+
+                timerImage.sprite = reviewTimerSprite;
+                
+                ResetTimer(reviewTime);
+            }
+            else if (timerState == TimerState.Reviewing)
+            {
+                timerState = TimerState.ReviewEnded;
+            }
+        }
     }
 }

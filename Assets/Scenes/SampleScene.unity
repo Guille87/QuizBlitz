@@ -612,6 +612,8 @@ MonoBehaviour:
   answerTime: 10
   reviewTime: 5
   timerImage: {fileID: 922273896}
+  defaultTimerSprite: {fileID: 21300000, guid: 1ba57e1f97844884abf990ea507e7972, type: 3}
+  reviewTimerSprite: {fileID: 21300000, guid: 2ed0f731d23e1fb408d9ffe07ac07195, type: 3}
 --- !u!1 &104814352
 GameObject:
   m_ObjectHideFlags: 0

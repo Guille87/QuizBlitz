@@ -14,6 +14,7 @@ public class Quiz : MonoBehaviour
     [SerializeField] Sprite correctAnswerSprite;
 
     Timer timer;
+    bool gotAnswered;
 
     void Start()
     {
@@ -27,6 +28,8 @@ public class Quiz : MonoBehaviour
         GetNextQuestion();
 
         timer.StartTimer();
+
+        gotAnswered = false;
     }
 
     void GetNextQuestion()
@@ -63,9 +66,13 @@ public class Quiz : MonoBehaviour
             questionText.text = "Respuesta incorrecta";
         }
 
-        answerButtons[question.CorrectAnswerIndex].GetComponentInChildren<Image>().sprite = correctAnswerSprite;
+        ShowCorrectAnswer();
 
         SetButtonState(false);
+
+        gotAnswered = true;
+
+        timer.CancelTimer();
     }
 
     void SetButtonState(bool state)
@@ -82,5 +89,26 @@ public class Quiz : MonoBehaviour
         {
             button.GetComponentInChildren<Image>().sprite = defaultAnswerSprite;
         }
+    }
+
+    void Update()
+    {
+        if (!gotAnswered && timer.State == Timer.TimerState.Reviewing)
+        {
+            questionText.text = "Tiempo agotado";
+
+            SetButtonState(false);
+
+            ShowCorrectAnswer();
+        }
+        else if (timer.State == Timer.TimerState.ReviewEnded)
+        {
+            StartQuestion();
+        }
+    }
+
+    void ShowCorrectAnswer()
+    {
+        answerButtons[question.CorrectAnswerIndex].GetComponentInChildren<Image>().sprite = correctAnswerSprite;
     }
 }
