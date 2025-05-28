@@ -1,12 +1,13 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Quiz : MonoBehaviour
 {
-    [SerializeField] QuestionSO question;
-
+    [SerializeField] List<QuestionSO> questions;
     [SerializeField] TextMeshProUGUI questionText;
+    [SerializeField] TextMeshProUGUI scoreText;
 
     [SerializeField] GameObject[] answerButtons;
 
@@ -15,10 +16,13 @@ public class Quiz : MonoBehaviour
 
     Timer timer;
     bool gotAnswered;
+    QuestionSO question;
+    Score score;
 
     void Start()
     {
         timer = GetComponent<Timer>();
+        score = GetComponent<Score>();
 
         StartQuestion();
     }
@@ -34,7 +38,26 @@ public class Quiz : MonoBehaviour
 
     void GetNextQuestion()
     {
-        DisplayQuestion();
+        if (questions.Count > 0)
+        {
+            GetRandomQuestion();
+            DisplayQuestion();
+            score.AddQuestionVisited();
+        }
+        else
+        {
+            questionText.text = "¡No hay más preguntas!";
+        }
+
+    }
+
+    void GetRandomQuestion()
+    {
+        int randomIndex = Random.Range(0, questions.Count);
+        question = questions[randomIndex];
+
+        // Elimina la pregunta seleccionada de la lista para no repetirla
+        questions.RemoveAt(randomIndex);
     }
 
     void DisplayQuestion()
@@ -60,6 +83,8 @@ public class Quiz : MonoBehaviour
         if (index == question.CorrectAnswerIndex)
         {
             questionText.text = "¡Respuesta correcta!";
+
+            score.AddCorrectAnswer();
         }
         else
         {
@@ -105,10 +130,18 @@ public class Quiz : MonoBehaviour
         {
             StartQuestion();
         }
+
+        ShowScore();
     }
 
     void ShowCorrectAnswer()
     {
         answerButtons[question.CorrectAnswerIndex].GetComponentInChildren<Image>().sprite = correctAnswerSprite;
+    }
+
+    void ShowScore()
+    {
+        //scoreText.text = "Puntuación: " + Mathf.RoundToInt(score.CorrectAnswers / (float)score.QuestionsVisited * 100) + "%";
+        scoreText.text = "Puntuación: " + score.CorrectAnswers + "/" + score.QuestionsVisited;
     }
 }
