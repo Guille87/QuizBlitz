@@ -15,12 +15,35 @@ public class Quiz : MonoBehaviour
 
     void Start()
     {
+        StartQuestion();
+    }
+
+    void StartQuestion()
+    {
+        GetNextQuestion();
+    }
+
+    void GetNextQuestion()
+    {
+        DisplayQuestion();
+    }
+
+    void DisplayQuestion()
+    {
+        // Texto de la pregunta
         questionText.text = question.Question;
 
+        // Respuestas
         for (int i = 0; i < answerButtons.Length; i++)
         {
             answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = question.GetAnswers(i);
         }
+
+        // Resetea los sprites de las respuestas
+        SetDefaultAnswerSprites();
+
+        // Resetea el estado de los botones
+        SetButtonState(true);
     }
 
     public void OnAnswerSelected(int index)
@@ -44,6 +67,14 @@ public class Quiz : MonoBehaviour
         foreach (var button in answerButtons)
         {
             button.GetComponent<Button>().interactable = state;
+        }
+    }
+
+    void SetDefaultAnswerSprites()
+    {
+        foreach (var button in answerButtons)
+        {
+            button.GetComponentInChildren<Image>().sprite = defaultAnswerSprite;
         }
     }
 }
