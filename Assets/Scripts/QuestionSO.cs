@@ -15,8 +15,16 @@ public class QuestionSO : ScriptableObject
     public string GetAnswers(int i) => answers[i];
 
     // Índice de la respuesta correcta
-    [SerializeField][Range(0, 3)]
+    [SerializeField]
+    [Range(0, 3)]
     [Tooltip("Índice de la respuesta correcta (0-3)")]
     int correctAnswerIndex = 0;
     public int CorrectAnswerIndex => correctAnswerIndex;
+    
+    public void SetData(string question, string[] answer, int correctAnswerIndex)
+    {
+        this.question = question;
+        answers = answer;
+        this.correctAnswerIndex = correctAnswerIndex;
+    }
 }
